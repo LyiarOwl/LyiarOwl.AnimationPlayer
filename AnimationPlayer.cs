@@ -27,17 +27,17 @@ namespace LyiarOwl.AnimationPlayer
         public void Update()
         {
             if (!IsPlaying || CurrentAnimation == null) return;
-
+            
             CurrentAnimation.Update(AnimationPlayerCore.DeltaTime * Speed);
 
             if (CurrentAnimation.IsFinished())
                 IsPlaying = false;
         }
-        public void AddAnimation(Animation animation, bool playOnStart = false)
+        public void Add(Animation animation, bool playOnStart = false)
         {
             if (_animations.ContainsKey(animation.Name))
             {
-                Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(AddAnimation), "This animation was already added!"));
+                Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Add), "This animation was already added!"));
                 return;
             }
 
@@ -49,26 +49,26 @@ namespace LyiarOwl.AnimationPlayer
             if (playOnStart)
             {
                 CurrentAnimation = animation;
-                PlayAnimation(animation.Name);
+                Play(animation.Name);
             }
         }
-        public void RemoveAnimation(string name)
+        public void Remove(string name)
         {
             if (!_animations.ContainsKey(name))
             {
-                Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(RemoveAnimation), $"There is no animation named as \"{name}\""));
+                Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Remove), $"There is no animation named as \"{name}\""));
                 return;
             }
             _animations.Remove(name);
         }
-        public void PlayAnimation(string name)
+        public void Play(string name)
         {
             if (CurrentAnimation != null && CurrentAnimation.Name == name && IsPlaying)
                 return;
 
             if (!_animations.TryGetValue(name, out Animation anim))
             {
-                Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(PlayAnimation), $"there is no animation named as \"{name}\""));
+                Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Play), $"there is no animation named as \"{name}\""));
                 return;
             }
             if (CurrentAnimation != null)
@@ -79,13 +79,13 @@ namespace LyiarOwl.AnimationPlayer
             IsPlaying = true;
             CurrentAnimation.Enter();
         }
-        public void PauseAnimation()
+        public void Pause()
         {
             if (CurrentAnimation != null)
                 if (IsPlaying)
                     IsPlaying = false;
         }
-        public void ResetAnimation()
+        public void Reset()
         {
             if (CurrentAnimation != null)
             {
@@ -93,7 +93,7 @@ namespace LyiarOwl.AnimationPlayer
                 CurrentAnimation.Exit();
             }
         }
-        public void ResumeAnimation()
+        public void Resume()
         {
             if (CurrentAnimation != null)
                 if (!IsPlaying)

@@ -7,13 +7,15 @@ namespace LyiarOwl.AnimationPlayer
         private double _elapsed;
         private TimeSpan _duration;
         private bool _started;
+        private bool _continue = true;
         private bool _playingForward = true;
         public readonly string Name;
         public readonly Keyframe[] Keyframes;
         public event Action<string> OnAnimationEnd;
         public TimeSpan Duration => _duration;
         public AnimationLoop Loop;
-        public Animation(string name, Keyframe[] keyframes, TimeSpan duration, AnimationLoop loop = AnimationLoop.NoLoop)
+        public Animation(string name, Keyframe[] keyframes, TimeSpan duration,
+            AnimationLoop loop = AnimationLoop.NoLoop)
         {
             Name = name;
             Keyframes = keyframes;
@@ -29,25 +31,26 @@ namespace LyiarOwl.AnimationPlayer
             if (Loop == AnimationLoop.PingPong)
                 direction = _playingForward ? 1.0 : -1.0;
 
-            _elapsed += delta * direction;
+            if (_continue)
+                _elapsed += delta * direction;
 
             UpdateAllKeyframes(_playingForward, delta);
 
             if (HasReachedEnd())
-            {
                 HandleEnd();
-            }
         }
         private void UpdateAllKeyframes(bool forward, float delta)
         {
             if (forward)
             {
                 foreach (var kf in Keyframes)
+                {
                     UpdateKeyframe(kf, delta);
+                }
             }
             else
             {
-                for (int i = Keyframes.Length - 1; i>= 0; i--)
+                for (int i = Keyframes.Length - 1; i >= 0; i--)
                 {
                     UpdateKeyframe(Keyframes[i], delta);
                 }
@@ -61,12 +64,22 @@ namespace LyiarOwl.AnimationPlayer
             /* enter keyframe */
             if (insideInterval && keyframe.State == KeyframeState.Idle)
             {
+                if (keyframe is PauseKeyframe pauseKf)
+                    if (!pauseKf.Condition())
+                        _continue = false;
+
                 keyframe.Enter();
             }
 
             /* update keyframe */
             if (insideInterval && keyframe.State == KeyframeState.Active)
+            {
+                if (keyframe is PauseKeyframe pauseKf)
+                    if (pauseKf.Condition())
+                        _continue = true;
+
                 keyframe.Update(delta);
+            }
 
             /* exit keyframe */
             if (!insideInterval && keyframe.State == KeyframeState.Active)
@@ -94,6 +107,7 @@ namespace LyiarOwl.AnimationPlayer
                     OnAnimationEnd?.Invoke(Name);
                     ResetKeyframes();
                     _started = false;
+                    _continue = true;
                     break;
             }
         }
@@ -106,6 +120,7 @@ namespace LyiarOwl.AnimationPlayer
         {
             _elapsed = 0.0;
             _started = true;
+            _continue = true;
             _playingForward = true;
             ResetKeyframes();
         }

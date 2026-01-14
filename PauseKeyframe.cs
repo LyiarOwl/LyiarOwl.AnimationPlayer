@@ -7,16 +7,16 @@ namespace LyiarOwl.AnimationPlayer
     /// </summary>
     public class PauseKeyframe : Keyframe
     {
-        private readonly Func<bool> _condition;
+        public readonly Func<bool> Condition;
         public PauseKeyframe(Action onUpdate, Func<bool> condition, TimeSpan begin, TimeSpan end, bool runOnce = true) : base(onUpdate, runOnce)
         {
-            _condition = condition;
+            Condition = condition;
             Begin = begin;
             End = end;
         }
         public PauseKeyframe(Action onEnter, Action onUpdate, Action onExit, Func<bool> condition, TimeSpan begin, TimeSpan end, bool runOnce = true) : base(onEnter, onUpdate, onExit, runOnce)
         {
-            _condition = condition;
+            Condition = condition;
             Begin = begin;
             End = end;
         }
