@@ -79,5 +79,25 @@ namespace LyiarOwl.AnimationPlayer
             IsPlaying = true;
             CurrentAnimation.Enter();
         }
+        public void PauseAnimation()
+        {
+            if (CurrentAnimation != null)
+                if (IsPlaying)
+                    IsPlaying = false;
+        }
+        public void ResetAnimation()
+        {
+            if (CurrentAnimation != null)
+            {
+                CurrentAnimation.Enter();
+                CurrentAnimation.Exit();
+            }
+        }
+        public void ResumeAnimation()
+        {
+            if (CurrentAnimation != null)
+                if (!IsPlaying)
+                    IsPlaying = true;
+        }
     }
 }
