@@ -8,42 +8,8 @@ namespace LyiarOwl.AnimationPlayer
         private bool _started;
         protected TimeSpan _begin;
         protected TimeSpan _end;
-        public TimeSpan Begin
-        {
-            get => _begin;
-            set
-            {
-                if (value > _end)
-                {
-                    var log = AnimationPlayerCore.CreateWarningMessage<Keyframe>(
-                        nameof(Begin),
-                        "Begin must be small or equal to End. Begin is being set to Zero!"
-                    );
-                    Console.WriteLine(log);
-                    _begin = TimeSpan.Zero;
-                    return;
-                }
-                _begin = value;
-            }
-        }
-        public TimeSpan End
-        {
-            get => _end;
-            set
-            {
-                if (value < _begin)
-                {
-                    var log = AnimationPlayerCore.CreateWarningMessage<Keyframe>(
-                         nameof(Begin),
-                         "End must be greater or equal to Begin. End is being set to Zero!"
-                     );
-                    Console.WriteLine(log);
-                    _end = TimeSpan.Zero;
-                    return;
-                }
-                value = TimeSpan.Zero;
-            }
-        }
+        public TimeSpan Begin => _begin;
+        public TimeSpan End => _end;
         public Action OnUpdate;
         public Action OnEnter;
         public Action OnExit;

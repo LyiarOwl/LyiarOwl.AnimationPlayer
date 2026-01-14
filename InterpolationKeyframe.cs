@@ -12,22 +12,27 @@ namespace LyiarOwl.AnimationPlayer
         private float _from;
         private float _to;
         private TimeSpan _duration;
-        public InterpolationKeyframe(Action<float> setter, float from, float to, TimeSpan begin, TimeSpan end)
+        private InterpolationType _type;
+        public InterpolationKeyframe(Action<float> setter, float from, float to, TimeSpan begin, TimeSpan end, InterpolationType type = InterpolationType.Linear)
         {
             _setter = setter;
             _from = from;
             _to = to;
-            Begin = begin;
-            End = end;
+            _begin = begin;
+            _end = end;
             _duration = end - begin;
+            _type = type;
         }
         public sealed override void Update()
         {
             _elapsed += AnimationPlayerCore.DeltaTime;
+            float value = 0f;
             double t = _elapsed / _duration.TotalSeconds;
             t = double.Clamp(t, 0d, 1d);
-
-            float value = _from + (_to - _from) * (float)t;
+            if (_type == InterpolationType.Linear)
+            {
+                value = _from + (_to - _from) * (float)t;
+            }
             _setter?.Invoke(value);
         }
 

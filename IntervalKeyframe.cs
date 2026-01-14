@@ -10,13 +10,13 @@ namespace LyiarOwl.AnimationPlayer
     {
         public IntervalKeyframe(Action onUpdate, TimeSpan begin, TimeSpan end, bool runOnce = true) : base(onUpdate, runOnce)
         {
-            Begin = begin;
-            End = end;
+            _begin = begin;
+            _end = end;
         }
         public IntervalKeyframe(Action onEnter, Action onUpdate, Action onExit, TimeSpan begin, TimeSpan end, bool runOnce = true) : base(onEnter, onUpdate, onExit, runOnce)
         {
-            Begin = begin;
-            End = end;
+            _begin = begin;
+            _end = end;
         }
     }
 }

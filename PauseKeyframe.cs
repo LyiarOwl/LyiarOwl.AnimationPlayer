@@ -11,14 +11,14 @@ namespace LyiarOwl.AnimationPlayer
         public PauseKeyframe(Action onUpdate, Func<bool> condition, TimeSpan begin, TimeSpan end, bool runOnce = true) : base(onUpdate, runOnce)
         {
             _condition = condition;
-            Begin = begin;
-            End = end;
+            _begin = begin;
+            _end = end;
         }
         public PauseKeyframe(Action onEnter, Action onUpdate, Action onExit, Func<bool> condition, TimeSpan begin, TimeSpan end, bool runOnce = true) : base(onEnter, onUpdate, onExit, runOnce)
         {
             _condition = condition;
-            Begin = begin;
-            End = end;
+            _begin = begin;
+            _end = end;
         }
     }
 }
