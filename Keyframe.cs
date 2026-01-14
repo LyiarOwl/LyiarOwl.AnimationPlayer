@@ -46,6 +46,19 @@ namespace LyiarOwl.AnimationPlayer
                 OnUpdate?.Invoke();
             }
         }
+        public virtual void Update(float delta, bool forward)
+        {
+            if (_runOnce && !_started)
+            {
+                OnUpdate?.Invoke();
+                _started = true;
+            }
+
+            if (!_runOnce)
+            {
+                OnUpdate?.Invoke();
+            }
+        }
         public virtual void Exit()
         {
             State = KeyframeState.Finished;

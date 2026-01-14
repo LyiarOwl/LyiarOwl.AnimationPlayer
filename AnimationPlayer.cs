@@ -27,13 +27,13 @@ namespace LyiarOwl.AnimationPlayer
         public void Update()
         {
             if (!IsPlaying || CurrentAnimation == null) return;
-            
+
             CurrentAnimation.Update(AnimationPlayerCore.DeltaTime * Speed);
 
             if (CurrentAnimation.IsFinished())
                 IsPlaying = false;
         }
-        public void Add(Animation animation, bool playOnStart = false)
+        public void Add(Animation animation)
         {
             if (_animations.ContainsKey(animation.Name))
             {
@@ -45,12 +45,6 @@ namespace LyiarOwl.AnimationPlayer
             _animations.Add(animation.Name, animation);
             if (CurrentAnimation == null)
                 CurrentAnimation = animation;
-
-            if (playOnStart)
-            {
-                CurrentAnimation = animation;
-                Play(animation.Name);
-            }
         }
         public void Remove(string name)
         {

@@ -7,6 +7,7 @@ namespace LyiarOwl.AnimationPlayer
         private double _elapsed;
         private TimeSpan _duration;
         private bool _started;
+        private bool _startedToInterpolate;
         private bool _continue = true;
         private bool _playingForward = true;
         public readonly string Name;
@@ -78,12 +79,19 @@ namespace LyiarOwl.AnimationPlayer
                     if (pauseKf.Condition())
                         _continue = true;
 
+                if (keyframe is InterpolationKeyframe interpolationKf)
+                {
+                    keyframe.Update(delta, _playingForward);
+                }
+
                 keyframe.Update(delta);
             }
 
             /* exit keyframe */
             if (!insideInterval && keyframe.State == KeyframeState.Active)
+            {
                 keyframe.Exit();
+            }
         }
         private bool HasReachedEnd()
         {
