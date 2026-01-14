@@ -19,6 +19,39 @@ namespace LyiarOwl.AnimationPlayer
             _duration = duration;
             Loop = loop;
         }
+
+        public void Update()
+        {
+            if (!_started) return;
+
+            double direction = 1.0;
+            if (Loop == AnimationLoop.PingPong)
+                direction = _playingForward ? 1.0 : -1.0;
+
+            _elapsed += AnimationPlayerCore.DeltaTime * direction;
+
+            UpdateAllKeyframes(_playingForward);
+
+            if (HasReachedEnd())
+            {
+                HandleEnd();
+            }
+        }
+        private void UpdateAllKeyframes(bool forward)
+        {
+            if (forward)
+            {
+                foreach (var kf in Keyframes)
+                    UpdateKeyframe(kf);
+            }
+            else
+            {
+                for (int i = Keyframes.Length - 1; i>= 0; i--)
+                {
+                    UpdateKeyframe(Keyframes[i]);
+                }
+            }
+        }
         private void UpdateKeyframe(Keyframe keyframe)
         {
             bool insideInterval = _elapsed >= keyframe.Begin.TotalSeconds &&
@@ -38,63 +71,42 @@ namespace LyiarOwl.AnimationPlayer
             if (!insideInterval && keyframe.State == KeyframeState.Active)
                 keyframe.Exit();
         }
-        public void Update()
+        private bool HasReachedEnd()
         {
-            if (!_started) return;
-
-            if (Loop == AnimationLoop.PingPong)
+            return _elapsed >= _duration.TotalSeconds || _elapsed <= 0.0;
+        }
+        private void HandleEnd()
+        {
+            switch (Loop)
             {
-                if (_playingForward)
-                {
-                    _elapsed += AnimationPlayerCore.DeltaTime;
-                    foreach (var keyframe in Keyframes)
-                        UpdateKeyframe(keyframe);
-                }
-                else
-                {
-                    _elapsed -= AnimationPlayerCore.DeltaTime;
-                    for (int i = Keyframes.Length - 1; i > 0; i--)
-                        UpdateKeyframe(Keyframes[i]);
-                }
-
-                if (_elapsed >= _duration.TotalSeconds || _elapsed <= 0f)
-                {
+                case AnimationLoop.PingPong:
                     _playingForward = !_playingForward;
-                    foreach (var kf in Keyframes)
-                        kf.Reset();
-                }
-                return;
-            }
+                    ResetKeyframes();
+                    break;
+                case AnimationLoop.Loop:
+                    if (_elapsed >= _duration.TotalSeconds)
+                        _elapsed -= _duration.TotalSeconds;
 
-
-            _elapsed += AnimationPlayerCore.DeltaTime;
-            foreach (var keyframe in Keyframes)
-                UpdateKeyframe(keyframe);
-            if (_elapsed >= _duration.TotalSeconds)
-            {
-                if (Loop == AnimationLoop.Loop)
-                {
-                    _elapsed -= _duration.TotalSeconds;
-                    foreach (var kf in Keyframes)
-                        kf.Reset();
-                    return;
-                }
-                else if (Loop == AnimationLoop.NoLoop)
-                {
+                    ResetKeyframes();
+                    break;
+                case AnimationLoop.NoLoop:
                     OnAnimationEnd?.Invoke(Name);
-                    foreach (var kf in Keyframes)
-                        kf.Reset();
+                    ResetKeyframes();
                     _started = false;
-                }
+                    break;
             }
+        }
+        private void ResetKeyframes()
+        {
+            foreach (var kf in Keyframes)
+                kf.Reset();
         }
         public void Enter()
         {
             _elapsed = 0.0;
             _started = true;
-
-            foreach (var kf in Keyframes)
-                kf.Reset();
+            _playingForward = true;
+            ResetKeyframes();
         }
         public void Exit()
         {
