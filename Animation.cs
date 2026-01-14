@@ -10,7 +10,8 @@ namespace LyiarOwl.AnimationPlayer
         private bool _playingForward = true;
         public readonly string Name;
         public readonly Keyframe[] Keyframes;
-        public event Func<string, string> OnAnimationEnd;
+        public event Action<string> OnAnimationEnd;
+        public TimeSpan Duration => _duration;
         public AnimationLoop Loop;
         public Animation(string name, Keyframe[] keyframes, TimeSpan duration, AnimationLoop loop = AnimationLoop.NoLoop)
         {
@@ -20,7 +21,7 @@ namespace LyiarOwl.AnimationPlayer
             Loop = loop;
         }
 
-        public void Update()
+        public void Update(float delta)
         {
             if (!_started) return;
 
@@ -28,31 +29,31 @@ namespace LyiarOwl.AnimationPlayer
             if (Loop == AnimationLoop.PingPong)
                 direction = _playingForward ? 1.0 : -1.0;
 
-            _elapsed += AnimationPlayerCore.DeltaTime * direction;
+            _elapsed += delta * direction;
 
-            UpdateAllKeyframes(_playingForward);
+            UpdateAllKeyframes(_playingForward, delta);
 
             if (HasReachedEnd())
             {
                 HandleEnd();
             }
         }
-        private void UpdateAllKeyframes(bool forward)
+        private void UpdateAllKeyframes(bool forward, float delta)
         {
             if (forward)
             {
                 foreach (var kf in Keyframes)
-                    UpdateKeyframe(kf);
+                    UpdateKeyframe(kf, delta);
             }
             else
             {
                 for (int i = Keyframes.Length - 1; i>= 0; i--)
                 {
-                    UpdateKeyframe(Keyframes[i]);
+                    UpdateKeyframe(Keyframes[i], delta);
                 }
             }
         }
-        private void UpdateKeyframe(Keyframe keyframe)
+        private void UpdateKeyframe(Keyframe keyframe, float delta)
         {
             bool insideInterval = _elapsed >= keyframe.Begin.TotalSeconds &&
                     _elapsed <= keyframe.End.TotalSeconds;
@@ -65,7 +66,7 @@ namespace LyiarOwl.AnimationPlayer
 
             /* update keyframe */
             if (insideInterval && keyframe.State == KeyframeState.Active)
-                keyframe.Update();
+                keyframe.Update(delta);
 
             /* exit keyframe */
             if (!insideInterval && keyframe.State == KeyframeState.Active)

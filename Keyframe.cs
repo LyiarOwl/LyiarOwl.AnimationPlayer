@@ -6,10 +6,8 @@ namespace LyiarOwl.AnimationPlayer
     {
         private bool _runOnce;
         private bool _started;
-        protected TimeSpan _begin;
-        protected TimeSpan _end;
-        public TimeSpan Begin => _begin;
-        public TimeSpan End => _end;
+        public TimeSpan Begin;
+        public TimeSpan End;
         public Action OnUpdate;
         public Action OnEnter;
         public Action OnExit;
@@ -35,7 +33,7 @@ namespace LyiarOwl.AnimationPlayer
             State = KeyframeState.Active;
             OnEnter?.Invoke();
         }
-        public virtual void Update()
+        public virtual void Update(float delta)
         {
             if (_runOnce && !_started)
             {

@@ -18,14 +18,14 @@ namespace LyiarOwl.AnimationPlayer
             _setter = setter;
             _from = from;
             _to = to;
-            _begin = begin;
-            _end = end;
+            Begin = begin;
+            End = end;
             _duration = end - begin;
             _type = type;
         }
-        public sealed override void Update()
+        public sealed override void Update(float delta)
         {
-            _elapsed += AnimationPlayerCore.DeltaTime;
+            _elapsed += delta;
             float value = 0f;
             double t = _elapsed / _duration.TotalSeconds;
             t = double.Clamp(t, 0d, 1d);
