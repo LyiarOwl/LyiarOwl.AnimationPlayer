@@ -43,6 +43,16 @@ namespace LyiarOwl.AnimationPlayer
                     : 1f - float.Pow(-2f * t + 2f, 3f) * 0.5f;
                 value = Interpolate(easedT);
             }
+            if (_type == InterpolationType.EaseIn)
+            {
+                float easedT = t * t * t;
+                value = Interpolate(easedT);
+            }
+            if (_type == InterpolationType.EaseOut)
+            {
+                float easedT = 1f - float.Pow(1f - t, 3f);
+                value = Interpolate(easedT);
+            }
 
             _setter?.Invoke(value);
         }
@@ -56,7 +66,7 @@ namespace LyiarOwl.AnimationPlayer
             base.Enter();
             _elapsed = 0d;
         }
-  
+
         public sealed override void Exit()
         {
             base.Exit();

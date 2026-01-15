@@ -55,7 +55,7 @@ namespace LyiarOwl.AnimationPlayer
             }
             _animations.Remove(name);
         }
-        public void Play(string name)
+        public void Play(string name, bool playBackwards = false)
         {
             if (CurrentAnimation != null && CurrentAnimation.Name == name && IsPlaying)
                 return;
