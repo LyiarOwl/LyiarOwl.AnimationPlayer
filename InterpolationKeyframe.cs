@@ -3,7 +3,7 @@ using System;
 namespace LyiarOwl.AnimationPlayer
 {
     /// <summary>
-    /// This keyframe will interpolate between two values during the interval (or until the current animation ends).
+    /// Interpolates between two values during an interval (or until the current animation ends).
     /// </summary>
     public class InterpolationKeyframe : Keyframe
     {
@@ -14,6 +14,15 @@ namespace LyiarOwl.AnimationPlayer
         private TimeSpan _duration;
         private double _invDuration => 1.0 / _duration.TotalSeconds;
         private InterpolationType _type;
+        /// <summary>
+        /// Creates a keyframe that interpolation any numerical value from a point to another.
+        /// </summary>
+        /// <param name="setter">The <c>float</c> parameter is the current interpolation value.</param>
+        /// <param name="from">Where the interpolation should start.</param>
+        /// <param name="to">Where the interpolation should end.</param>
+        /// <param name="begin">Where/When this keyframe should start.</param>
+        /// <param name="end">Where/When this keyframe should end.</param>
+        /// <param name="type">Type of the interpolation.</param>
         public InterpolationKeyframe(Action<float> setter, float from, float to, TimeSpan begin, TimeSpan end, InterpolationType type = InterpolationType.Linear)
         {
             _setter = setter;

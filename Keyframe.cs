@@ -2,6 +2,9 @@ using System;
 
 namespace LyiarOwl.AnimationPlayer
 {
+    /// <summary>
+    /// Base class of all the keyframes.
+    /// </summary>
     public class Keyframe
     {
         private bool _runOnce;
