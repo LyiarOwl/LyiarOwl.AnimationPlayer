@@ -29,8 +29,11 @@ namespace LyiarOwl.AnimationPlayer
             if (!_started) return;
 
             double direction = 1.0;
-            if (Loop == AnimationLoop.PingPong)
-                direction = _playingForward ? 1.0 : -1.0;
+
+            // if (Loop == AnimationLoop.PingPong)
+            //     direction = _playingForward ? 1.0 : -1.0;
+            // else
+            direction = _playingForward ? 1.0 : -1.0;
 
             if (_continue)
                 _elapsed += delta * direction;
@@ -108,6 +111,8 @@ namespace LyiarOwl.AnimationPlayer
                 case AnimationLoop.Loop:
                     if (_elapsed >= _duration.TotalSeconds)
                         _elapsed -= _duration.TotalSeconds;
+                    else
+                        _elapsed += _duration.TotalSeconds;
 
                     ResetKeyframes();
                     break;
@@ -126,10 +131,11 @@ namespace LyiarOwl.AnimationPlayer
         }
         public void Enter()
         {
-            _elapsed = 0.0;
             _started = true;
             _continue = true;
-            _playingForward = true;
+            
+            _elapsed = _playingForward ? 0.0 : _duration.TotalSeconds;
+
             ResetKeyframes();
         }
         public void Exit()
@@ -137,5 +143,11 @@ namespace LyiarOwl.AnimationPlayer
             _started = false;
         }
         public bool IsFinished() => !_started;
+        public void SetPlayDirection(bool forward)
+        {
+            _playingForward = forward;
+            if (!_playingForward)
+                _elapsed = _duration.TotalSeconds;
+        }
     }
 }

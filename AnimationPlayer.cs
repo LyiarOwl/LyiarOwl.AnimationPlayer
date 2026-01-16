@@ -55,7 +55,7 @@ namespace LyiarOwl.AnimationPlayer
             }
             _animations.Remove(name);
         }
-        public void Play(string name, bool playBackwards = false)
+        public void Play(string name, bool backward = false)
         {
             if (CurrentAnimation != null && CurrentAnimation.Name == name && IsPlaying)
                 return;
@@ -65,11 +65,15 @@ namespace LyiarOwl.AnimationPlayer
                 Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Play), $"there is no animation named as \"{name}\""));
                 return;
             }
+
             if (CurrentAnimation != null)
                 CurrentAnimation.OnAnimationEnd -= OnAnimationEnd;
 
             CurrentAnimation = anim;
             CurrentAnimation.OnAnimationEnd += OnAnimationEnd;
+
+            CurrentAnimation.SetPlayDirection(!backward);
+
             IsPlaying = true;
             CurrentAnimation.Enter();
         }
