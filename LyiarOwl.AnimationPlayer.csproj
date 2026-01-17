@@ -3,10 +3,40 @@
     <TargetFramework>net8.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1591</NoWarn>
+
+    <PackageId>LyiarOwl.AnimationPlayer</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>LyiarOwl</Authors>
+    <Company>LyiarOwl</Company>
+    <Description>
+      A lightweight animation system inspired by Godot's AnimationPlayer,
+      designed for MonoGame and similar frameworks.
+    </Description>
+
+    <PackageTags>monogame animation godot keyframe</PackageTags>
+    <RepositoryUrl>https://github.com/LyiarOwl/LyiarOwl.AnimationPlayer</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+  <PropertyGroup>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="imgs/**" />
+  </ItemGroup>
+
 </Project>
