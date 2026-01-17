@@ -1,6 +1,6 @@
 # 🎬 AnimationPlayer
 
-> 😵‍💫 Currently, this module is only available for MonoGame, but I intend to make it available for use with FNA, soon!
+> 😵‍💫 Currently, this module is only available for [MonoGame](https://monogame.net), but I intend to make it available for use with FNA, soon!
 
 ## About this module
 
@@ -15,6 +15,13 @@ over time.
 2. Create an Animation and add it to the AnimationPlayer
 3. Add keyframes to the animation
 4. Play the animation.
+
+## ⭐ How to install?
+
+Simply add the package to your [MonoGame](https://monogame.net) project:
+```bash
+dotnet add package LyiarOwl.AnimationPlayer --version 0.1.1
+```
 
 ---
 
