@@ -57,13 +57,13 @@ namespace LyiarOwl.AnimationPlayer
             End = end;
         }
         /// <summary>
-        /// <para>Automatically adjust all the <seealso cref="IntervalKeyframe"/> of this 
-        /// <seealso cref="Animation"/> based in the animation duration.</para>
+        /// <para>Automatically distribute all the <seealso cref="IntervalKeyframe"/> of this 
+        /// <seealso cref="Animation"/> according with it duration.</para>
         /// <para>Useful when your keyframes follow a sequence.</para>
         /// </summary>
         /// <param name="animation"></param>
         /// <returns>Returns the own animation.</returns>
-        public static Animation SortKeyframesByDuration(Animation animation)
+        public static Animation AutoDistribute(Animation animation)
         {
             double interval = animation.Duration.TotalSeconds / animation.Keyframes.Length;
             for (int i = 0; i < animation.Keyframes.Length; i++)

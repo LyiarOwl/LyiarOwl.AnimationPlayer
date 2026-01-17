@@ -205,14 +205,14 @@ protected override void Update(GameTime gameTime) {
 - Is completely safe to call `Play` within the `Update` method.
     - The animation will not restart if it is already playing (unless you call `Reset` explicitly).
 
-#### `SortKeyframesByDuration`
+#### `AutoDistribute`
 
-Note that the interval between all the keyframes follow an incremental pattern (0.0 .. 0.1, 0.1 .. 0.2, 0.2 .. 0.3 and so on). In this case you can use the method `SortKeyframesByDuration` to adjust the keyframes according with the animation's duration:
+Note that the interval between all the keyframes follow an incremental pattern (0.0 .. 0.1, 0.1 .. 0.2, 0.2 .. 0.3 and so on). In this case you can use the method `AutoDistribute` to distribute the keyframes according with the duration of the animation:
 
 ```csharp
 ...
 _animPlayer.Add(
-    IntervalKeyframe.SortKeyframesByDuration(
+    IntervalKeyframe.AutoDistribute(
         new Animation(
             name: "run",
             keyframes: [
@@ -245,7 +245,7 @@ _animPlayer.Add(
 
 The result will be the exact same as before.
 By the way, if you change the duration of the animation during its
-creation, the method `SortKeyframesByDuration` will adjust the `begin` and `end` of all the keyframes accordingly with that duration.
+creation, the method `AutoDistribute` will automatically adjust the `begin` and `end` of all the keyframes accordingly with that duration.
 
 #### Playing the animation backwards
 
@@ -317,7 +317,7 @@ new Animation(
 
 #### Run Once
 
-The `onUpdate` callback run just once and at the exact moment as the `onEnter` (or when the the keyframe begins). If by some reason you need that the update callback be called while the keyframe is active, set the argument `runOnce` to `false`:
+The `onUpdate` callback run just once and at the exact moment as the `onEnter` (or when the keyframe begins). If by some reason you need that the update callback be called while the keyframe is active, set the argument `runOnce` to `false`:
 - `onEnter`: runs only once at the beginning of the keyframe.
 - `onUpdate`: (default) runs only once at the beginning of the keyframe, but if `runOnce` is set to `false`, it will run until the keyframe ends.
 - `onExit`: runs only once at the end of the keyframe.
@@ -514,8 +514,8 @@ The idea above is:
 
 > Honestly, during my tests I didn't find any useful moment to use this kind of Keyframe yet, but might you have one, so... I hope you enjoy it.
 
-## 🥳 Lastly
-I hope so much that this module comes to be helpful for you, if you get any issue while using it you can open an issue in this repository or even contact me via:
+## 🥳 Finally
+I really hope this module is useful to you, if you have any problems using it you can open an issue in this repository or even contact me via:
 
 - [@Lyiar_u (on X)](https://x.com/lyiar_u)
 - "LyiarOwl.cs" (My personal Discord)
