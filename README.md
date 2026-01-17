@@ -20,7 +20,7 @@ over time.
 
 Simply add the package to your [MonoGame](https://monogame.net) project:
 ```bash
-dotnet add package LyiarOwl.AnimationPlayer --version 0.1.1
+dotnet add package LyiarOwl.AnimationPlayer
 ```
 
 ---

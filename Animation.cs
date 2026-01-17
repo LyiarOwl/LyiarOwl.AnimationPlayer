@@ -10,7 +10,6 @@ namespace LyiarOwl.AnimationPlayer
         private double _elapsed;
         private TimeSpan _duration;
         private bool _started;
-        private bool _startedToInterpolate;
         private bool _continue = true;
         private bool _playingForward = true;
 
