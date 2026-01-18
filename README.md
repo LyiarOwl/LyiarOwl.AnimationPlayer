@@ -257,6 +257,10 @@ creation, the method `AutoDistribute` will automatically adjust the `begin` and 
 > 
 > If you're following older examples, update the method name accordingly.
 
+> 💡 If your animation has only one frame, **you still need to set its duration to a value greater than `0.0`**; otherwise, the animation will never play.
+>
+> You must also set the keyframe’s `Begin` and `End` to cover the full animation duration (or simply use `AutoDistribute`).
+
 
 #### Playing the animation backwards
 
