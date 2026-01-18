@@ -18,11 +18,13 @@ over time.
 
 ## ⭐ How to install?
 
-Simply add the package to your [MonoGame](https://monogame.net) project:
+Simply add the [package](https://www.nuget.org/packages/LyiarOwl.AnimationPlayer/) to your [MonoGame](https://monogame.net) project:
 ```bash
 dotnet add package LyiarOwl.AnimationPlayer
 ```
 
+- [API Documentation](API.md)
+- [Changelog](CHANGELOG.md)
 ---
 
 ## Keyframes
@@ -246,6 +248,13 @@ _animPlayer.Add(
 The result will be the exact same as before.
 By the way, if you change the duration of the animation during its
 creation, the method `AutoDistribute` will automatically adjust the `begin` and `end` of all the keyframes accordingly with that duration.
+
+> ⚠️ **API change notice**:
+> In versions **<= 0.1.1**, the method now called `AutoDistribute`
+> was previously named `SortKeyframesByDuration`.
+> 
+> If you're following older examples, update the method name accordingly.
+
 
 #### Playing the animation backwards
 

@@ -3,7 +3,8 @@ using System;
 namespace LyiarOwl.AnimationPlayer
 {
     /// <summary>
-    /// Interpolates between two values during an interval (or until the current animation ends).
+    /// Interpolates between two numeric values during a time interval
+    /// (or until the current animation ends).
     /// </summary>
     public class InterpolationKeyframe : Keyframe
     {
@@ -15,14 +16,17 @@ namespace LyiarOwl.AnimationPlayer
         private double _invDuration => 1.0 / _duration.TotalSeconds;
         private InterpolationType _type;
         /// <summary>
-        /// Creates a keyframe that interpolation any numerical value from a point to another.
+        /// Creates a keyframe that interpolates a numeric value from one point to another.
         /// </summary>
-        /// <param name="setter">The <c>float</c> parameter is the current interpolation value.</param>
-        /// <param name="from">Where the interpolation should start.</param>
-        /// <param name="to">Where the interpolation should end.</param>
-        /// <param name="begin">Where/When this keyframe should start.</param>
-        /// <param name="end">Where/When this keyframe should end.</param>
-        /// <param name="type">Type of the interpolation.</param>
+        /// <param name="setter">
+        /// Callback used to apply the interpolated value.
+        /// The <c>float</c> parameter represents the current interpolation value.
+        /// </param>
+        /// <param name="from">Starting value of the interpolation.</param>
+        /// <param name="to">Ending value of the interpolation.</param>
+        /// <param name="begin">Time at which this keyframe starts.</param>
+        /// <param name="end">Time at which this keyframe ends.</param>
+        /// <param name="type">Interpolation type to be used.</param>
         public InterpolationKeyframe(Action<float> setter, float from, float to, TimeSpan begin, TimeSpan end, InterpolationType type = InterpolationType.Linear)
         {
             _setter = setter;
@@ -33,6 +37,13 @@ namespace LyiarOwl.AnimationPlayer
             _duration = end - begin;
             _type = type;
         }
+        /// <summary>
+        /// Updates the interpolation value for the current frame.
+        /// </summary>
+        /// <param name="delta">Delta time of the current frame.</param>
+        /// <param name="forward">
+        /// Indicates whether the animation is playing forward or backward.
+        /// </param>
         public sealed override void Update(float delta, bool forward)
         {
             _elapsed += delta;
@@ -70,12 +81,26 @@ namespace LyiarOwl.AnimationPlayer
             return _from + (_to - _from) * t;
         }
 
+        /// <summary>
+        /// Called when the animation attempts to enter this keyframe.
+        /// </summary>
+        /// <remarks>
+        /// This method is responsible for preparing the keyframe state and
+        /// may influence whether the keyframe actually becomes active.
+        /// </remarks>
         public sealed override void Enter()
         {
             base.Enter();
             _elapsed = 0d;
         }
 
+        /// <summary>
+        /// Called when the animation leaves this keyframe.
+        /// </summary>
+        /// <remarks>
+        /// This method is responsible for cleaning up or finalizing the keyframe state
+        /// after it is no longer active.
+        /// </remarks>
         public sealed override void Exit()
         {
             base.Exit();

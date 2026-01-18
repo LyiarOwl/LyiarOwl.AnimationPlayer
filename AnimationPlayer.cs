@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace LyiarOwl.AnimationPlayer
 {
     /// <summary>
-    /// Manager of animations.
+    /// Manages and controls animations.
     /// </summary>
     public class AnimationPlayer
     {
@@ -12,20 +12,23 @@ namespace LyiarOwl.AnimationPlayer
         private float _speed = 1f;
         private Dictionary<string, Animation> _animations;
 
+        /// <summary>
+        /// The animation currently being played.
+        /// </summary>
         public Animation CurrentAnimation { get; private set; }
         /// <summary>
-        /// If this animation is playing or not.
+        /// Indicates whether an animation is currently playing.
         /// </summary>
         public bool IsPlaying { get; private set; }
 
         /// <summary>
         /// <para>Called when the current animation ends.</para>
-        /// <para>The <c>string</c> parameter is the name of the animation ended.</para>
+        /// <para>The <c>string</c> parameter is the name of the animation that ended.</para>
         /// </summary>
         public event Action<string> OnAnimationEnd;
         /// <summary>
-        /// <para>The current speed of this animation.</para>
-        /// <para>Default: <c>1.0</c>, Minimal: <c>0.0</c></para>
+        /// <para>Playback speed of the current animation.</para>
+        /// <para>Default: <c>1.0</c>, Minimum: <c>0.0</c></para>
         /// </summary>
         public float Speed
         {
@@ -36,14 +39,15 @@ namespace LyiarOwl.AnimationPlayer
             }
         }
         /// <summary>
-        /// Creates an animation manager.
+        /// Creates a new animation manager.
         /// </summary>
         public AnimationPlayer()
         {
             _animations = new Dictionary<string, Animation>();
         }
+
         /// <summary>
-        /// Update the current animation.
+        /// Updates the current animation.
         /// </summary>
         public void Update()
         {
@@ -55,11 +59,11 @@ namespace LyiarOwl.AnimationPlayer
                 IsPlaying = false;
         }
         /// <summary>
-        /// <para>Add an animation to this manager.</para>
-        /// <para>If the animation was already added, this operation will be ignored 
+        /// <para>Adds an animation to this manager.</para>
+        /// <para>If the animation was already added, this operation will be ignored
         /// and a warning will be printed.</para>
         /// </summary>
-        /// <param name="animation">Animation to be added.</param>
+        /// <param name="animation">The animation to be added.</param>
         public void Add(Animation animation)
         {
             if (_animations.ContainsKey(animation.Name))
@@ -73,8 +77,8 @@ namespace LyiarOwl.AnimationPlayer
                 CurrentAnimation = animation;
         }
         /// <summary>
-        /// <para>Removes any animation with this <c>name</c>.</para>
-        /// <para>If there is no animation with this <c>name</c>, 
+        /// <para>Removes the animation with the specified <c>name</c>.</para>
+        /// <para>If no animation with this <c>name</c> exists,
         /// this operation will be ignored and a warning will be printed.</para>
         /// </summary>
         /// <param name="name">Name of the animation to be removed.</param>
@@ -88,13 +92,13 @@ namespace LyiarOwl.AnimationPlayer
             _animations.Remove(name);
         }
         /// <summary>
-        /// <para>Play the animation with this <c>name</c>.</para>
-        /// <para>If the animation is already being played, nothing will happen.</para>
-        /// <para>If there is no animation with this <c>name</c>, 
+        /// <para>Plays the animation with the specified <c>name</c>.</para>
+        /// <para>If the animation is already playing, nothing will happen.</para>
+        /// <para>If no animation with this <c>name</c> exists,
         /// this operation will be ignored and a warning will be printed.</para>
         /// </summary>
         /// <param name="name">Name of the animation to be played.</param>
-        /// <param name="backward">If this animation should play backwards.</param>
+        /// <param name="backward">Whether the animation should play backwards.</param>
         public void Play(string name, bool backward = false)
         {
             if (CurrentAnimation != null && CurrentAnimation.Name == name && IsPlaying)
@@ -118,8 +122,9 @@ namespace LyiarOwl.AnimationPlayer
             CurrentAnimation.Enter();
         }
         /// <summary>
-        /// <para>Pause the current animation.</para>
-        /// <para>If this manager doesn't have any animation, this operation will be ignored.</para>
+        /// <para>Pauses the current animation.</para>
+        /// <para>Use <seealso cref="Resume"/> to continue the animation.</para>
+        /// <para>If this manager has no animation, this operation will be ignored.</para>
         /// </summary>
         public void Pause()
         {
@@ -128,8 +133,8 @@ namespace LyiarOwl.AnimationPlayer
                     IsPlaying = false;
         }
         /// <summary>
-        /// <para>Reset the state of the current animation (and everything internally, including keyframes).</para>
-        /// <para>If this manager doesn't have any animation, this operation will be ignored.</para>
+        /// <para>Resets the state of the current animation, including all keyframes.</para>
+        /// <para>If this manager has no animation, this operation will be ignored.</para>
         /// </summary>
         public void Reset()
         {
@@ -140,14 +145,28 @@ namespace LyiarOwl.AnimationPlayer
             }
         }
         /// <summary>
-        /// <para>Resume the current animation if it is paused.</para>
-        /// <para>If this manager doesn't have any animation, this operation will be ignored.</para>
+        /// <para>Resumes the current animation if it is paused.</para>
+        /// <para>If this manager has no animation, this operation will be ignored.</para>
         /// </summary>
         public void Resume()
         {
             if (CurrentAnimation != null)
                 if (!IsPlaying)
                     IsPlaying = true;
+        }
+
+        /// <summary>
+        /// <para>Stops the current animation and resets its state.</para>
+        /// <para>Use <seealso cref="Pause"/> if you want to pause the animation instead.</para>
+        /// <para>If this manager has no animation, this operation will be ignored.</para>
+        /// </summary>
+        public void Stop()
+        {
+            if (CurrentAnimation != null)
+            {
+                Pause();
+                Reset();
+            }
         }
     }
 }

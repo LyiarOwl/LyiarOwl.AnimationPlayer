@@ -3,24 +3,61 @@ using Microsoft.Xna.Framework;
 namespace LyiarOwl.AnimationPlayer
 {
     /// <summary>
-    /// Essential part that makes the <seealso cref="AnimationPlayer"/> works properly.
+    /// Core utilities required for the <seealso cref="AnimationPlayer"/> to work properly.
     /// </summary>
     public static class AnimationPlayerCore
     {
+        /// <summary>
+        /// Delta time (in seconds) of the current frame.
+        /// </summary>
         public static float DeltaTime { get; private set; }
         /// <summary>
-        /// Updates the <seealso cref="DeltaTime" /> property that will be used by all the components of this
-        /// module.
+        /// Updates the <seealso cref="DeltaTime"/> value used internally by all components
+        /// of this module.
         /// </summary>
+        /// <param name="time">Current game time.</param>
         public static void Update(GameTime time)
         {
             DeltaTime = (float)time.ElapsedGameTime.TotalSeconds;
         }
+        /// <summary>
+        /// Creates a formatted diagnostic message associated with a specific class and method.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The class type where the message originated.
+        /// </typeparam>
+        /// <param name="methodName">
+        /// Name of the method that generated the message.
+        /// </param>
+        /// <param name="message">
+        /// The message content.
+        /// </param>
+        /// <param name="errorType">
+        /// Optional prefix used to categorize the message (for example, warnings or errors).
+        /// </param>
+        /// <returns>
+        /// A formatted string containing the message and its origin context.
+        /// </returns>
         public static string CreateMessage<T>(string methodName, string message, string errorType = "")
     where T : class
         {
             return $"{errorType}[{typeof(T).Name} :: {methodName}]: {message}";
         }
+        /// <summary>
+        /// Creates a formatted warning message associated with a specific class and method.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The class type where the warning originated.
+        /// </typeparam>
+        /// <param name="methodName">
+        /// Name of the method that generated the warning.
+        /// </param>
+        /// <param name="message">
+        /// The warning message content.
+        /// </param>
+        /// <returns>
+        /// A formatted warning string.
+        /// </returns>
         public static string CreateWarningMessage<T>(string methodName, string message) where T : class
         {
             return CreateMessage<T>(methodName, message, "[WARN]");
