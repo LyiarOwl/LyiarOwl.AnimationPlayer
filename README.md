@@ -23,6 +23,8 @@ Simply add the [package](https://www.nuget.org/packages/LyiarOwl.AnimationPlayer
 dotnet add package LyiarOwl.AnimationPlayer
 ```
 
+[![NuGet version](https://badge.fury.io/nu/LyiarOwl.AnimationPlayer.svg)](https://badge.fury.io/nu/LyiarOwl.AnimationPlayer)
+
 - [API Documentation](API.md)
 - [Changelog](CHANGELOG.md)
 ---
