@@ -87,7 +87,7 @@ I think that the best way of showing you what this module can do is presenting e
 #### Setup
 Spritesheet used (created by [Ansimuz](https://ansimuz.itch.io/super-grotto-escape-pack)):
 
-![super grotto escape player](imgs/player-run.png)
+[![super grotto escape player](imgs/player-run.png)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/player-run.png)
 
 ```csharp
 using LyiarOwl.AnimationPlayer;
@@ -135,7 +135,7 @@ protected override void Draw(GameTime gameTime) {
 }
 ```
 
-![screenshot 0](imgs/screenshot0.png)
+[![screenshot 0](imgs/screenshot0.png)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screenshot0.png)
 
 #### Animating the sprite
 
@@ -203,7 +203,7 @@ protected override void Update(GameTime gameTime) {
 }
 ```
 
-![screen gif 0](imgs/screengif0.gif)
+[![screen gif 0](imgs/screengif0.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif0.gif)
 
 - Creating the `AnimationPlayer` within `Initialize` or `LoadContent` doesn't matter because the animator doesn't depends on the `GraphicsDevice`.
 - Is completely safe to call `Play` within the `Update` method.
@@ -273,7 +273,8 @@ Despite of this module being very inspired by Godot's AnimationPlayer, there is 
 That is, the last keyframe will always be the last state of everything that changed when the `onUpdate` callback of that keyframe was called:
 
 Spritesheet used (created by [Zerie](https://zerie.itch.io/tiny-rpg-character-asset-pack)):
-![Soldier-Attack01](imgs/Soldier-Attack01.png)
+
+[![Soldier-Attack01](imgs/Soldier-Attack01.png)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/Soldier-Attack01.png)
 
 ```csharp
 new Animation(
@@ -305,7 +306,7 @@ new Animation(
 
 > `AnimationLoop.NoLoop` is the default option, therefore you can omit the line `loop: AnimationLoop.NoLoop`.
 
-![screen gif1](imgs/screengif1.gif)
+[![screen gif1](imgs/screengif1.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif1.gif)
 
 Note that the changes of the last keyframe remains even after the animation end.
 
@@ -328,7 +329,7 @@ new Animation(
 )
 ```
 
-![screen gif2](imgs/screengif2.gif)
+[![screen gif2](imgs/screengif2.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif2.gif)
 
 #### Run Once
 
@@ -342,7 +343,7 @@ The `onUpdate` callback run just once and at the exact moment as the `onEnter` (
 #### Setup
 Sprite used (created by [me](https://www.deviantart.com/lyiarowl/art/MonoGame-Splash-Pixel-Art-1280781127))
 
-![MonoGame Logo](imgs/monogame-icon.png)
+[![MonoGame Logo](imgs/monogame-icon.png)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/monogame-icon.png)
 
 > I created this pixelated version of the MonoGame's logo, not the logo itself! 😅
 
@@ -400,7 +401,7 @@ protected override void Draw(GameTime gameTime) {
 }
 ```
 
-![screenshot1](imgs/screenshot1.png)
+[![screenshot1](imgs/screenshot1.png)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screenshot1.png)
 
 #### Moving the sprite
 
@@ -423,7 +424,7 @@ new Animation(
 
 This keyframe will take the value in `from` (`100`) and will interpolate it until it get to `to` (`500`). The result of this interpolation over time is return through the argument `value`:
 
-![screen gif3](imgs/screengif3.gif)
+[![screen gif3](imgs/screengif3.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif3.gif)
 
 #### Types of Interpolation
 
@@ -431,18 +432,18 @@ This keyframe accepts 4 types of interpolation:
 
 1. **`InterpolationType.Linear`** (default): you already see it above.
 2. **`InterpolationType.EaseIn`**:
-![screen gif4](imgs/screengif4.gif)
+[![screen gif4](imgs/screengif4.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif4.gif)
 3. **`InterpolationType.EaseOut`**:
-![screen gif5](imgs/screengif5.gif)
+[![screen gif5](imgs/screengif5.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif5.gif)
 4. **`InterpolationType.EaseInOut`**:
-![screen gif6](imgs/screengif6.gif)
+[![screen gif6](imgs/screengif6.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif6.gif)
 
 ### Types of loop
 
 1. `AnimationLoop.NoLoop` (default): you already see it before.
 2. `AnimationLoop.Loop`: you already see it before.
 3. `AnimationLoop.PingPong`:
-![screen gif7](imgs/screengif7.gif)
+[![screen gif7](imgs/screengif7.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif7.gif)
 
 ### PauseKeyframe
 
@@ -525,7 +526,7 @@ The idea above is:
 - When pressing the Spacebar the animation will begin, but it will stop when the `PauseKeyframe` be reached.
 - When you press F the `_attack` attribute becomes `true`, therefore, the condition is satisfied, therefore, the animation can continue.
 
-![screen gif8](imgs/screengif8.gif)
+[![screen gif8](imgs/screengif8.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif8.gif)
 
 > Honestly, during my tests I didn't find any useful moment to use this kind of Keyframe yet, but might you have one, so... I hope you enjoy it.
 
