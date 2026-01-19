@@ -1,3 +1,6 @@
+# 0.3.1
+- The `Add` method now prints the name of the animation if it has already been added.
+
 ## 0.3.0
 - Added `Stop` method to the animation API.
 - Improved and expanded API documentation.
