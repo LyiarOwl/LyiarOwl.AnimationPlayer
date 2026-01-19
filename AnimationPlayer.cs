@@ -68,7 +68,7 @@ namespace LyiarOwl.AnimationPlayer
         {
             if (_animations.ContainsKey(animation.Name))
             {
-                Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Add), "This animation was already added!"));
+                Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Add), $"The \"{animation.Name}\" animation was already added!"));
                 return;
             }
 
