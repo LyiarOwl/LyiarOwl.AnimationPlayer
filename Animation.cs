@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace LyiarOwl.AnimationPlayer
 {
@@ -20,7 +21,7 @@ namespace LyiarOwl.AnimationPlayer
         /// <summary>
         /// Keyframes that compose this animation.
         /// </summary>
-        public readonly Keyframe[] Keyframes;
+        public readonly List<Keyframe> Keyframes;
         /// <summary>
         /// <para>Called when the animation ends.</para>
         /// <para>The <c>string</c> parameter is the name of this animation.</para>
@@ -41,7 +42,7 @@ namespace LyiarOwl.AnimationPlayer
         /// <param name="keyframes">Keyframes that make up this animation.</param>
         /// <param name="duration">Total duration of this animation.</param>
         /// <param name="loop">Defines whether this animation should loop.</param>
-        public Animation(string name, Keyframe[] keyframes, TimeSpan duration,
+        public Animation(string name, List<Keyframe> keyframes, TimeSpan duration,
             AnimationLoop loop = AnimationLoop.NoLoop)
         {
             Name = name;
@@ -84,7 +85,7 @@ namespace LyiarOwl.AnimationPlayer
             }
             else
             {
-                for (int i = Keyframes.Length - 1; i >= 0; i--)
+                for (int i = Keyframes.Count - 1; i >= 0; i--)
                 {
                     UpdateKeyframe(Keyframes[i], delta);
                 }

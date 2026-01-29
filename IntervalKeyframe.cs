@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 
 namespace LyiarOwl.AnimationPlayer
 {
@@ -95,12 +96,14 @@ namespace LyiarOwl.AnimationPlayer
         /// <returns>The same animation instance, with updated keyframe timing.</returns>
         public static Animation AutoDistribute(Animation animation)
         {
-            double interval = animation.Duration.TotalSeconds / animation.Keyframes.Length;
-            for (int i = 0; i < animation.Keyframes.Length; i++)
+            double interval = animation.Duration.TotalSeconds / animation.Keyframes.Count;
+            for (int i = 0; i < animation.Keyframes.Count; i++)
             {
                 var kf = animation.Keyframes[i];
                 kf.Begin = TimeSpan.FromSeconds(interval * i);
                 kf.End = TimeSpan.FromSeconds(interval + interval * i);
+                if (kf is InterpolationKeyframe ikf)
+                    ikf.RecalculateDuration();
             }
             return animation;
         }

@@ -74,6 +74,7 @@ Each type modifies how the interpolation factor `t` evolves over time.
   - Ping-pong animations
   - Variable animation speed
 - Ideal for continuous, smooth transitions.
+- When using `AutoDistribute`, `begin` and `end` values are ignored and automatically recalculated.
 
 ---
 

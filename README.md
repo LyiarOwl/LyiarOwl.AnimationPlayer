@@ -1,8 +1,8 @@
 # 🎬 AnimationPlayer
 
-> 😵‍💫 Currently, this module is only available for [MonoGame](https://monogame.net), but I intend to make it available for use with FNA, soon!
-
 ## About this module
+
+> ✨ This module is **engine-agnostic**, which means that it should work properly with [MonoGame](https://monogame.net/), [FNA](https://fna-xna.github.io/), [Unity](https://unity.com/pt) (as a plugin), or any other framework/engine!
 
 🤖 This module was inspired by Godot's AnimationPlayer, which means that the way you use it should feel similar to Godot's AnimationPlayer.
 
@@ -51,7 +51,10 @@ using LyiarOwl.AnimationPlayer;
 public class Game1 : Game {
     ...
     protected override void Update(GameTime gameTime) {
-        AnimationPlayerCore.Update(gameTime);
+        AnimationPlayerCore.Update(gameTime.ElapsedGameTime);
+        // or
+        float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        AnimationPlayerCore.Update(dt);
         ...
     }
     ...
@@ -197,7 +200,7 @@ protected override void LoadContent() {
 }
 
 protected override void Update(GameTime gameTime) {
-    AnimationPlayerCore.Update(gameTime);
+    AnimationPlayerCore.Update(gameTime.ElapsedGameTime);
     _animPlayer.Update();
     ...
 }
@@ -373,7 +376,7 @@ protected override void LoadContent() {
 }
 
 protected override void Update(GameTime gameTime) {
-    AnimationPlayerCore.Update(gameTime);
+    AnimationPlayerCore.Update(gameTime.ElapsedGameTime);
     _animPlayer.Update();
 }
 

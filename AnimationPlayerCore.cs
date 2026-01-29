@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using System;
 
 namespace LyiarOwl.AnimationPlayer
 {
@@ -16,9 +16,40 @@ namespace LyiarOwl.AnimationPlayer
         /// of this module.
         /// </summary>
         /// <param name="time">Current game time.</param>
-        public static void Update(GameTime time)
+        public static void Update(TimeSpan time)
         {
-            DeltaTime = (float)time.ElapsedGameTime.TotalSeconds;
+            Update((float)time.TotalSeconds);
+        }
+        /// <summary>
+        /// Updates the <seealso cref="DeltaTime"/> value used internally by all components
+        /// of this module.
+        /// </summary>
+        /// <param name="deltaTime">Current delta time.</param>
+        public static void Update(float deltaTime)
+        {
+            if (float.IsNaN(deltaTime) || float.IsInfinity(deltaTime))
+            {
+#if DEBUG
+                Console.WriteLine($"[WARN][AnimationPlayerCore :: Update]: deltaTime is NaN or Infinity. It is being set to 0.0!");
+#endif
+                DeltaTime = 0f;
+                return;
+            }
+            DeltaTime = Max(0.0f, deltaTime);
+        }
+        public static float Max(float a, float b)
+        {
+            if (a > b)
+                return a;
+            return b;
+        }
+        public static float Clamp(float value, float min, float max)
+        {
+            if (value < min)
+                return min;
+            if (value > max)
+                return max;
+            return value;   
         }
         /// <summary>
         /// Creates a formatted diagnostic message associated with a specific class and method.

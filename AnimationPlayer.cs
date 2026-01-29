@@ -35,7 +35,14 @@ namespace LyiarOwl.AnimationPlayer
             get => _speed;
             set
             {
-                _speed = float.Max(0f, value);
+                if (float.IsNaN(value) || float.IsInfinity(value))
+                {
+#if DEBUG
+                    Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Speed), "The value being set is NaN or Infinity. Speed is being set to 0.0!"));
+#endif                    
+                    _speed = 0f;
+                }
+                _speed = AnimationPlayerCore.Max(0f, value);
             }
         }
         /// <summary>
@@ -68,7 +75,9 @@ namespace LyiarOwl.AnimationPlayer
         {
             if (_animations.ContainsKey(animation.Name))
             {
+#if DEBUG
                 Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Add), $"The \"{animation.Name}\" animation was already added!"));
+#endif
                 return;
             }
 
@@ -86,7 +95,9 @@ namespace LyiarOwl.AnimationPlayer
         {
             if (!_animations.ContainsKey(name))
             {
+#if DEBUG
                 Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Remove), $"There is no animation named as \"{name}\""));
+#endif
                 return;
             }
             _animations.Remove(name);
@@ -106,7 +117,9 @@ namespace LyiarOwl.AnimationPlayer
 
             if (!_animations.TryGetValue(name, out Animation anim))
             {
+#if DEBUG
                 Console.WriteLine(AnimationPlayerCore.CreateWarningMessage<AnimationPlayer>(nameof(Play), $"there is no animation named as \"{name}\""));
+#endif
                 return;
             }
 

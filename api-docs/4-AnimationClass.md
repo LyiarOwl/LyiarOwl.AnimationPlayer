@@ -10,7 +10,7 @@ Represents a time-based animation composed of keyframes and driven by callback f
 
 | **Definition** | **Description** | **Note** |
 |--|--|--|
-| `Animation(string name, Keyframe[] keyframes, TimeSpan duration, [AnimationLoop loop = NoLoop])` | Creates a new animation instance. | The animation does not start automatically. Use `AnimationPlayer.Play` or call `Enter` manually. |
+| `Animation(string name, List<Keyframe> keyframes, TimeSpan duration, [AnimationLoop loop = NoLoop])` | Creates a new animation instance. | The animation does not start automatically. Use `AnimationPlayer.Play` or call `Enter` manually. |
 
 ---
 
@@ -31,7 +31,7 @@ Represents a time-based animation composed of keyframes and driven by callback f
 | **Definition** | **Description** | **Note** |
 |--|--|--|
 | `string Name` | Name of this animation. | Read-only. |
-| `Keyframe[] Keyframes` | Keyframes that compose this animation. | Order matters; keyframes are evaluated based on time. |
+| `List<Keyframe> Keyframes` | Keyframes that compose this animation. | Keyframes are evaluated based on time. |
 | `TimeSpan Duration` | Total duration of the animation. | Read-only. |
 | `AnimationLoop Loop` | Defines how the animation behaves when it reaches the end. | See [AnimationLoop](3-AnimationLoopEnum.md) for details. |
 | `Action<string> OnAnimationEnd` | Event triggered when the animation ends. | The `string` parameter is the animation name. |
