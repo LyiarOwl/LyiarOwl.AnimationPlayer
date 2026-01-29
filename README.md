@@ -427,6 +427,25 @@ new Animation(
 
 This keyframe will take the value in `from` (`100`) and will interpolate it until it get to `to` (`500`). The result of this interpolation over time is return through the argument `value`:
 
+By the way, in cases like this where you have just one single keyframe and it begins at 0.0 and end at the exact end of the animation, you can use
+`AutoDistribute` here too:
+
+```csharp
+IntervalKeyframe.AutoDistribute(
+    new Animation(
+        name: "move",
+        keyframes: [
+            new InterpolationKeyframe(
+                value => _position.X = value,
+                from: _position.X,
+                to: 500f,
+            )
+        ],
+        duration: TimeSpan.FromSeconds(2.0),
+    )
+)
+```
+
 [![screen gif3](imgs/screengif3.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif3.gif)
 
 #### Types of Interpolation
