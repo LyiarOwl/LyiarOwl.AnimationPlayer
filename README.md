@@ -336,9 +336,9 @@ new Animation(
 
 #### Run Once
 
-The `onUpdate` callback run just once and at the exact moment as the `onEnter` (or when the keyframe begins). If by some reason you need that the update callback be called while the keyframe is active, set the argument `runOnce` to `false`:
+The `onUpdate` callback run just once and at the exact moment as the `onEnter` (or when the keyframe begins). If by some reason you need that the update callback be called continuously while the keyframe is active, set the argument `runOnce` to `false`:
 - `onEnter`: runs only once at the beginning of the keyframe.
-- `onUpdate`: (default) runs only once at the beginning of the keyframe, but if `runOnce` is set to `false`, it will run until the keyframe ends.
+- `onUpdate`: (default) runs only once at the beginning of the keyframe, but if `runOnce` is set to `false`, it will run continuously until the keyframe ends.
 - `onExit`: runs only once at the end of the keyframe.
 
 ### InterpolationKeyframe
@@ -454,10 +454,15 @@ This keyframe accepts 4 types of interpolation:
 
 1. **`InterpolationType.Linear`** (default): you already see it above.
 2. **`InterpolationType.EaseIn`**:
+
 [![screen gif4](imgs/screengif4.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif4.gif)
-3. **`InterpolationType.EaseOut`**:
+
+4. **`InterpolationType.EaseOut`**:
+
 [![screen gif5](imgs/screengif5.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif5.gif)
-4. **`InterpolationType.EaseInOut`**:
+
+5. **`InterpolationType.EaseInOut`**:
+
 [![screen gif6](imgs/screengif6.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif6.gif)
 
 ### Types of loop
@@ -465,6 +470,7 @@ This keyframe accepts 4 types of interpolation:
 1. `AnimationLoop.NoLoop` (default): you already see it before.
 2. `AnimationLoop.Loop`: you already see it before.
 3. `AnimationLoop.PingPong`:
+
 [![screen gif7](imgs/screengif7.gif)](https://raw.githubusercontent.com/LyiarOwl/LyiarOwl.AnimationPlayer/main/imgs/screengif7.gif)
 
 ### PauseKeyframe
